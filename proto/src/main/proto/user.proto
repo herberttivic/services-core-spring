@@ -1,16 +1,8 @@
 syntax = "proto3";
 
 option java_multiple_files = true;
-option java_package = "com.tivic.proto.grpc_test.user";
-option java_outer_classname = "UserServiceProto";
 
-package  com.tivic.proto.user;
-
-service UserService{
-  rpc create(UserReq) returns (UserRes) {}
-  rpc getAll(EmptyReq) returns (UserResList) {}
-  rpc getAllServerStream(EmptyReq) returns (stream UserRes){}
-}
+package com.tivic;
 
 message UserReq{
   string name = 1;
@@ -26,3 +18,14 @@ message UserResList{
   repeated UserRes users =1;
 }
 message EmptyReq{}
+
+service UserService{
+
+//unary - synchronous
+  rpc create(UserReq) returns (UserRes) {}
+  rpc getAll(EmptyReq) returns (UserResList) {}
+
+//server streaming - asynchronous
+//  rpc getAllServerStream(EmptyReq) returns (stream UserRes){}
+//client streaming - asynchronous
+}
