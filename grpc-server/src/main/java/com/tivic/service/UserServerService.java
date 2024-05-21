@@ -2,6 +2,7 @@ package com.tivic.service;
 
 import com.tivic.*;
 import com.tivic.entities.UserEntity;
+import com.tivic.entities.UserGrpcAdapter;
 import com.tivic.repository.UserRepository;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
@@ -44,5 +45,61 @@ public class UserServerService  extends UserServiceGrpc.UserServiceImplBase {
         }catch(Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void getAllServerStream(EmptyReq request, StreamObserver<UserRes> responseObserver) {
+        try {
+            userRepository.findAll().forEach(userEntity -> {
+                UserRes user = UserGrpcAdapter.toGrpcRes(userEntity);
+                responseObserver.onNext(user);
+            });
+            responseObserver.onCompleted();
+
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public StreamObserver<EmptyReq> getAllClientStream(StreamObserver<UserRes> responseObserver) {
+        System.out.println("connection initiated!");
+        return new StreamObserver<EmptyReq>() {
+            @Override
+            public void onNext(EmptyReq emptyReq) {
+//                LÓGICA QUE ACONTECE A CADA USUÁRIO DA STREAM RECEBIDA
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+//                SE HOUVER ERRO NO RECEBIMENTO DA STREAM GRPC
+            }
+
+            @Override
+            public void onCompleted() {
+//
+            }
+        };
+    }
+
+    @Override
+    public StreamObserver<EmptyReq> getAllBidirecionalStream(StreamObserver<UserRes> responseObserver) {
+        System.out.println("connection started!");
+        return new StreamObserver<EmptyReq>() {
+            @Override
+            public void onNext(EmptyReq emptyReq) {
+//                LÓGICA QUE ACONTECE A CADA USUÁRIO DA STREAM RECEBIDA
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+//                SE HOUVER ERRO NO RECEBIMENTO DA STREAM GRPC
+            }
+
+            @Override
+            public void onCompleted() {
+                System.out.println("connection stopped!");
+            }
+        };
     }
 }

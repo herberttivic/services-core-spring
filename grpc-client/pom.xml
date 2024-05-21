@@ -51,6 +51,11 @@
             <version>3.19.1</version>
         </dependency>
 
+        <dependency>
+            <groupId>br.com.tivic.sol</groupId>
+            <artifactId>sol</artifactId>
+            <version>1.4.0</version>
+        </dependency>
 
         <dependency>
             <groupId>com.tivic</groupId>
@@ -65,7 +70,7 @@
             <version>2.9.0.RELEASE</version>
         </dependency>
 
-        <!--		DEPENÊNCIAS DO GRPC (FIM)-->
+        <!-- DEPENÊNCIAS DO GRPC (FIM)-->
     </dependencies>
 
     <build>

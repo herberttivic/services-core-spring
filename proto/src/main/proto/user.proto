@@ -26,6 +26,11 @@ service UserService{
   rpc getAll(EmptyReq) returns (UserResList) {}
 
 //server streaming - asynchronous
-//  rpc getAllServerStream(EmptyReq) returns (stream UserRes){}
+  rpc getAllServerStream(EmptyReq) returns (stream UserRes){}
+
 //client streaming - asynchronous
+  rpc getAllClientStream(stream EmptyReq) returns (UserRes){}
+
+//bi-direcional streaming - asynchronous
+  rpc getAllBidirecionalStream(stream EmptyReq) returns (stream UserRes){}
 }
